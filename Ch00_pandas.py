@@ -32,8 +32,10 @@ fig, axes = plt.subplots(nrows=3, ncols=1)
 axes[0].plot(data_example)
 
 axes[1].plot(angle_range)
-# sinusoidal_data.plot(x=angle_range, ax = axes[1])
-axes[2].plot(angle_range, sinusoidal_data)
+sinusoidal_data.plot(x=angle_range, ax = axes[2])
+# axes[2].plot(angle_range,sinusoidal_data)
+# axes[2].plot()
+
 # sinusoidal_data.plot()
 # px.plot(sinusoidal_data)
 
@@ -41,3 +43,5 @@ axes[2].plot(angle_range, sinusoidal_data)
 
 
 # plt.show()
+
+

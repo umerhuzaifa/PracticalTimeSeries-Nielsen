@@ -75,7 +75,11 @@ def produce_donations(period_rng, user_behavior, num_emails, use_id, user_join_y
     donations = pd.DataFrame({'user': [], 'amount': [], 'timestamp': []})
     for n in range(num_times_gave):
         
-        donations = donations.append(pd.DataFrame({'user': [use_id],
+        # donations = donations.append(pd.DataFrame({'user': [use_id],
+        #                                'amount': [donation_amounts[user_gives_idx + \
+        #                                           np.random.binomial(1, .3)]], 
+        #                                'timestamp': [str(period_rng[times[n]].start_time + random_weekly_time_delta())]}))
+        donations = pd.concat(pd.DataFrame({'user': [use_id],
                                        'amount': [donation_amounts[user_gives_idx + \
                                                   np.random.binomial(1, .3)]], 
                                        'timestamp': [str(period_rng[times[n]].start_time + random_weekly_time_delta())]}))
@@ -109,12 +113,24 @@ for idx in range(yearJoined.shape[0]):
     info = user_behaviors[idx](user_rng)
 
     if len(info) == len(user_rng):
-        emails = emails.append(pd.DataFrame({'user': [idx] * len(info),
+        data = pd.DataFrame({'user': [idx] * len(info),
                                     'week': [str(r.start_time) for r in user_rng],
-                                    'emailsOpened': info}))
-
-    donations = donations.append(produce_donations(user_rng, user_behaviors[idx],
+                                    'emailsOpened': info})
+        
+        emails = pd.concat([emails, data])
+        # emails = emails.append(pd.DataFrame({'user': [idx] * len(info),
+        #                             'week': [str(r.start_time) for r in user_rng],
+        #                             'emailsOpened': info}))
+        # emails = emails.concat(pd.DataFrame({'user': [idx] * len(info),
+        #                             'week': [str(r.start_time) for r in user_rng],
+        #                             'emailsOpened': info}))
+    data = pd.DataFrame(produce_donations(user_rng, user_behaviors[idx],
                                                     sum(info), idx, join_date.year))
+    donations = pd.concat([donations, data])
+    # donations = donations.append(produce_donations(user_rng, user_behaviors[idx],
+    #                                                 sum(info), idx, join_date.year))
+    # donations = donations.concat(produce_donations(user_rng, user_behaviors[idx],
+    #                                                 sum(info), idx, join_date.year))
 
 
 

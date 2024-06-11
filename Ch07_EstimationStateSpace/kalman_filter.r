@@ -90,3 +90,4 @@ legend("topleft",
        legend = c("Measured", "Actual", "Filtered", "Forecast"),
        col = c("black", "red", "orange", "blue"), 
        lty = 1:4)
+
